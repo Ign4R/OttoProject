@@ -25,15 +25,15 @@ public class CharacterController : MonoBehaviour
 
     public void Movement(Vector2 position)
     {
-        /// Nos movemos utilizando el rigibody 
+        // Nos movemos utilizando el rigibody 
         _rb.position = position;
 
     }
     public void IsFalling()
     {
-        /// Ponemos la variable en true para indicar que ya fue agarrado
+        // Ponemos la variable en true para indicar que ya fue agarrado
         _isDragged = true;
-        /// Setiamos la gravedad en un valor para que caiga hacia abajo con una velocidad
+        // Setiamos la gravedad en un valor para que caiga hacia abajo con una velocidad
         _rb.gravityScale = 1 * _velocityGravity;
     }
         
@@ -49,12 +49,20 @@ public class CharacterController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Catcher"))
         {
-            ///Sumar vidas y puntos
+            ///Sumar vidas o puntos
             ResetValues();
         }
 
     }
 
-    
- 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Food"))
+        {
+            ///A medida que va aumentando una variable se va engordando el sprite
+            ///Sumar puntos
+        }
+    }
+
+
 }

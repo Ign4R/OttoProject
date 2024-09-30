@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Limit
   - Catcher
+  - Food
   layers:
   - Default
   - TransparentFX
