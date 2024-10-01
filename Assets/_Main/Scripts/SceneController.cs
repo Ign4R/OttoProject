@@ -9,4 +9,17 @@ public class SceneController : MonoBehaviour
     {
         SceneManager.LoadScene(value);
     }
+
+    public void Pause()
+    {
+        if (Time.timeScale != 0)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+    }
+
 }
