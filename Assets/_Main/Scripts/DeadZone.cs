@@ -17,6 +17,9 @@ public class DeadZone : MonoBehaviour
             _player.ResetValues();
 
         }
-         
+        if (collision.gameObject.CompareTag("Clone"))
+            gameObject.SetActive(false);
+
+
     }
 }
