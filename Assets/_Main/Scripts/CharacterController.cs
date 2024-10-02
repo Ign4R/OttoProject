@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 public class CharacterController : MonoBehaviour
@@ -15,6 +16,8 @@ public class CharacterController : MonoBehaviour
     private Sprite[] _imagesBasic;
     [SerializeField]
     private Sprite[] _imagesSpeed;
+    [SerializeField]
+    private PhysicsMaterial2D[] _physMats;
 
     private Vector3 _pointSpawn;
     private Vector3 _grabPosStart;
@@ -26,9 +29,13 @@ public class CharacterController : MonoBehaviour
     [SerializeField]
     private float _velocityGravity;
     [SerializeField]
+    private int _maxHit = 10;
+    [SerializeField]
     private bool isClone;
 
     public bool IsDragged { get => _isDragged; }
+
+    public static Action<bool> OnResetLevel;
 
     private void Awake()
     {
@@ -65,7 +72,7 @@ public class CharacterController : MonoBehaviour
         // Ponemos la variable en true para indicar que ya fue agarrado
         _isDragged = true;
         // Setiamos la gravedad en un valor para que caiga hacia abajo con una velocidad
-        _rb.gravityScale = 1;
+        _rb.gravityScale = 0.5f;
     }
     public void ChangeImages(Sprite[] images)
     {
@@ -74,6 +81,7 @@ public class CharacterController : MonoBehaviour
     }
     public void ResetValues()
     {
+        _coll.sharedMaterial = _physMats[0];
         _countFood = 0;
         ChangeImages(_imagesBasic);
         _coll.radius = _colliderSizes[0];
@@ -91,7 +99,7 @@ public class CharacterController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Catcher"))
-        {
+        {      
             if (isClone)
             {
                 gameObject.SetActive(false);
@@ -100,10 +108,27 @@ public class CharacterController : MonoBehaviour
             {
                 ///Sumar vidas o puntos
                 ResetValues();
+                OnResetLevel(true);
             }
       
         }
 
+        if (collision.gameObject.CompareTag("DeadZone"))
+        {
+            ///Perder vidas
+          
+            if (isClone)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                ResetValues();
+                OnResetLevel(true);
+            }
+             
+        }
+       
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -126,6 +151,7 @@ public class CharacterController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Speed"))
         {
+            _coll.sharedMaterial = _physMats[1];
             _rb.gravityScale = 1 * _velocityGravity;
             ChangeImages(_imagesSpeed);
         }
@@ -134,6 +160,7 @@ public class CharacterController : MonoBehaviour
         {
             Instantiate(_prefab, transform.position, Quaternion.identity);
         }
+
     }
 
 

@@ -9,6 +9,8 @@ TagManager:
   - Muffin
   - Speed
   - Clone
+  - Obstacle
+  - DeadZone
   layers:
   - Default
   - TransparentFX

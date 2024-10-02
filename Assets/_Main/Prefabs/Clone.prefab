@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2683873054189361977}
   m_Layer: 6
   m_Name: Clone
-  m_TagString: Clon
+  m_TagString: Clone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -175,4 +175,5 @@ MonoBehaviour:
   - 1
   - 1.5
   _velocityGravity: 4
+  _maxHit: 10
   isClone: 1
