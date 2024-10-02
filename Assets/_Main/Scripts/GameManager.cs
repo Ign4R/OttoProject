@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public Image cafeBar;
+    private float currentScore;  // Puntaje actual
+    public float maxScore;
 
     private void Start()
     {
@@ -18,9 +22,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ResetLevel()
+    public void AddScore(int score)
     {
-
+        currentScore += score;
+        cafeBar.fillAmount = currentScore / maxScore;
     }
 
 }

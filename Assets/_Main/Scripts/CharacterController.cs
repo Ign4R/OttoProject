@@ -149,6 +149,7 @@ public class CharacterController : MonoBehaviour
             ///Sumar puntos
         }
 
+     
         if (collision.gameObject.CompareTag("Speed"))
         {
             _coll.sharedMaterial = _physMats[1];
