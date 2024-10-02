@@ -4,7 +4,8 @@ public class CatcherController : MonoBehaviour
     private Rigidbody2D _rb;
     private Vector2 _direction;
 
-    private bool isTouched;
+    [SerializeField]
+    private Animator _anim;
 
     [SerializeField] 
     private float _speed;
@@ -13,6 +14,7 @@ public class CatcherController : MonoBehaviour
     {
         // Obtener el Rigidbody2D      
         _rb = GetComponent<Rigidbody2D>();
+      
     }
     private void Start()
     {
@@ -44,6 +46,13 @@ public class CatcherController : MonoBehaviour
                 _direction = Vector3.right; // Cambiar de izquierda a derecha
             }
         }
+
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Clone"))
+        {
+            _anim.SetTrigger("IsScore");
+        }
     }
+
+
 
 }

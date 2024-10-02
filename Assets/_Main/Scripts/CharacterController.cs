@@ -37,6 +37,7 @@ public class CharacterController : MonoBehaviour
 
     public static Action<bool> OnResetLevel;
 
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -72,7 +73,7 @@ public class CharacterController : MonoBehaviour
         // Ponemos la variable en true para indicar que ya fue agarrado
         _isDragged = true;
         // Setiamos la gravedad en un valor para que caiga hacia abajo con una velocidad
-        _rb.gravityScale = 0.5f;
+        _rb.gravityScale = 0.8f;
     }
     public void ChangeImages(Sprite[] images)
     {
@@ -81,6 +82,7 @@ public class CharacterController : MonoBehaviour
     }
     public void ResetValues()
     {
+        GameManager.instance.ReactivateFoods();
         _coll.sharedMaterial = _physMats[0];
         _countFood = 0;
         ChangeImages(_imagesBasic);
@@ -99,7 +101,9 @@ public class CharacterController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Catcher"))
-        {      
+        {
+            GameManager.instance.ModifyLife(1);
+
             if (isClone)
             {
                 gameObject.SetActive(false);
@@ -123,6 +127,7 @@ public class CharacterController : MonoBehaviour
             }
             else
             {
+                GameManager.instance.ModifyLife(-1);
                 ResetValues();
                 OnResetLevel(true);
             }
